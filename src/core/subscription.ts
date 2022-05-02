@@ -54,7 +54,10 @@ export class TagSubscription extends BaseSubscription {
       page++
     }
     for (const meta of posts.slice(latestPostIndex + 1)) {
-      const post = await meta.get()
+      const post = await meta.get().catch(() => {})
+      if (!post) {
+        continue
+      }
 
       await this.setLatestPostId(post.ID)
       await events.emit('post', post)
@@ -98,7 +101,10 @@ export class MemberSubscription extends BaseSubscription {
       page++
     }
     for (const meta of posts.slice(latestPostIndex + 1)) {
-      const post = await meta.get()
+      const post = await meta.get().catch(() => {})
+      if (!post) {
+        continue
+      }
 
       await this.setLatestPostId(post.ID)
       await events.emit('post', post)
@@ -142,7 +148,10 @@ export class SeriesSubscription extends BaseSubscription {
       page++
     }
     for (const meta of posts.slice(latestPostIndex + 1)) {
-      const post = await meta.get()
+      const post = await meta.get().catch(() => {})
+      if (!post) {
+        continue
+      }
 
       await this.setLatestPostId(post.ID)
       await events.emit('post', post)
